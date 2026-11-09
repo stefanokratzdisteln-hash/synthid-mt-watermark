@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use this code or data, please cite the paper below."
+title: "SynthID-Text Watermarking in Chinese-to-English Machine Translation: Paired Translations, Detection Scores, and Lexical Measures"
+abstract: "Paired Chinese-to-English translations of 60 LCMC expository passages produced by Qwen2.5-3B-Instruct with SynthID-Text enabled and disabled, together with per-item detection scores, score gaps, and lexical measures."
+authors:
+  - family-names: "Liu"
+    given-names: "Chang"
+    affiliation: "The Chinese University of Hong Kong, Shenzhen"
+version: 1.0.0
+date-released: "2026-11-10"
+license: MIT
+repository-code: "https://github.com/stefanokratzisteln-hash/synthid-mt-watermark"
+keywords:
+  - text watermarking
+  - SynthID-Text
+  - machine translation
+  - translationese
+  - lexical diversity
+  - MATTR

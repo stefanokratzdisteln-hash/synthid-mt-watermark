@@ -1,0 +1,26 @@
+RQ1: Detection outcome
+
+Primary outcome: correct-key mean g-score. Enabling SynthID-Text raised the correct-key
+mean g-score from 0.5003 (SD = 0.0059; range 0.4878-0.5144) in the watermark-disabled
+condition to 0.5403 (SD = 0.0085; range 0.5246-0.5755) in the watermark-enabled condition.
+The paired mean difference was +0.0399 (95% CI [0.0372, 0.0427]), t(59) = 28.97, p < .001,
+Cohen's d_z = 3.74, and all 60 pairs moved in the same direction. The two conditions did not
+overlap at the level of individual translations: the highest score in the disabled condition
+(0.5144) remained below the lowest score in the enabled condition (0.5246), so every
+translation was assigned to its own condition by this score alone. The disabled condition
+also sat at 0.5003, statistically indistinguishable from the 0.5 expectation for an
+unwatermarked sequence, which indicates that the scoring procedure itself introduces no
+baseline inflation.
+
+Secondary outcome: score gap. The score gap, defined as the correct-key mean g-score minus
+the average mean g-score obtained with five incorrect keys, was 0.00014 (SD = 0.00716;
+range -0.0166 to 0.0158) without the watermark and 0.04035 (SD = 0.00929; range 0.0208 to
+0.0749) with it, a paired mean difference of +0.0402 (95% CI [0.0372, 0.0433]),
+t(59) = 26.41, p < .001, Cohen's d_z = 3.41. Here too all 60 pairs increased, and the two
+conditions did not overlap (disabled maximum 0.0158 below enabled minimum 0.0208).
+
+The score gap thus rose by essentially the same amount as the correct-key mean g-score
+itself, and because the gap in the disabled condition was indistinguishable from zero, the
+increase under SynthID-Text is attributable to the correct key matching the generation-time
+key rather than to a general elevation of g-scores; the secondary outcome therefore
+corroborates the primary one.

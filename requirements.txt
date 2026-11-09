@@ -1,0 +1,15 @@
+# Core analysis stack (versions used for every number in the paper)
+transformers==5.22.2
+torch==2.11.0
+numpy>=2.1
+scipy==1.18.1
+pandas>=2.2
+lexicalrichness==0.5.1
+matplotlib==3.11.2
+
+# Generation-side dependencies
+accelerate>=1.0
+safetensors>=0.4
+
+# PDF text export (optional, used only for checking the manuscript)
+pypdf==7.0.0
