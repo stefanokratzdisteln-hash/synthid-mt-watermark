@@ -162,7 +162,7 @@ trigram ratio do not exhaust stylistic space, and no human evaluation of quality
   author = {Liu, Chang},
   year   = {2026},
   note   = {Course paper, ENG2001, CUHK-Shenzhen},
-  url    = {https://github.com/stefanokratzisteln-hash/synthid-mt-watermark}
+  url    = {https://github.com/stefanokratzdisteln-hash/synthid-mt-watermark}
 }
 ```
 
