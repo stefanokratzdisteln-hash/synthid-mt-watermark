@@ -28,13 +28,17 @@ import torch
 from scipy import stats
 from transformers import AutoTokenizer, SynthIDTextWatermarkLogitsProcessor
 
-BASE = Path(__file__).resolve().parent
-CSV_IN = BASE / "translation_results.csv"
+BASE = Path(__file__).resolve().parent          # scripts/ 目录
+ROOT = BASE.parent                               # 仓库根
+DATA = ROOT / "data"
+RESULTS = ROOT / "results"
+
+CSV_IN = DATA / "translation_results.csv"
 # 分词器目录：默认按本地原始布局解析；公开仓库使用者可用环境变量 QWEN_MODEL_DIR 覆盖
 MODEL_DIR = Path(os.environ.get(
-    "QWEN_MODEL_DIR", str(BASE.parent / "experiment" / "Qwen2.5-3B-Instruct")))
-OUT_ITEM = BASE / "metrics_per_item.csv"
-OUT_SUM = BASE / "metrics_summary.md"
+    "QWEN_MODEL_DIR", str(ROOT.parent / "experiment" / "Qwen2.5-3B-Instruct")))
+OUT_ITEM = DATA / "metrics_per_item.csv"
+OUT_SUM = RESULTS / "metrics_summary.md"
 
 # 与实验脚本 run_experiment_synthid.py 中完全一致的水印参数
 KEYS = [654, 400, 836, 123, 340, 443, 597, 160, 57, 29,

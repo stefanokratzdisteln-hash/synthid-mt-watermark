@@ -19,13 +19,17 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy import stats
 
-BASE = Path(__file__).resolve().parent
-OUT = BASE / "paper_assets"
+BASE = Path(__file__).resolve().parent          # scripts/ 目录
+ROOT = BASE.parent                               # 仓库根
+DATA = ROOT / "data"
+RESULTS = ROOT / "results"
+
+OUT = RESULTS
 OUT.mkdir(exist_ok=True)
 
-mi = list(csv.DictReader(open(BASE / "metrics_per_item.csv", encoding="utf-8-sig")))
-sg = list(csv.DictReader(open(BASE / "score_gap_results.csv", encoding="utf-8-sig")))
-group = {r["id"]: r["group"] for r in csv.DictReader(open(BASE / "translation_results.csv", encoding="utf-8-sig"))}
+mi = list(csv.DictReader(open(DATA / "metrics_per_item.csv", encoding="utf-8-sig")))
+sg = list(csv.DictReader(open(DATA / "score_gap_results.csv", encoding="utf-8-sig")))
+group = {r["id"]: r["group"] for r in csv.DictReader(open(DATA / "translation_results.csv", encoding="utf-8-sig"))}
 
 OUTCOMES = [
     ("Correct-key mean g-score", "g", mi, "{:.4f}"),
@@ -132,7 +136,8 @@ for name, k, rows, fmt in OUTCOMES:
         f"{'< .001' if s['p'] < .001 else f'{s[chr(112)]:.3f}'} | {s['dz']:.2f} | "
         f"{s['up']}/{s['down']} | {s['n']} |")
 
-md += ["", "> 说明：d_z 为配对效应量（ΔM / SD_diff）；Pairs ↑/↓ 统计逐条升高/降低的条数，用于说明变化是否双向。",
+md += ["", "> Note. d_z is the paired effect size (ΔM / SD_diff); Pairs ↑/↓ counts how many items rose or "
+       "fell, which shows whether the change is directional or two-sided.",
        "", "## Table 2 (new). Descriptive statistics and ranges per condition", "",
        "| Outcome | Disabled M | Disabled SD | Disabled range | Enabled M | Enabled SD | Enabled range |",
        "|---|---|---|---|---|---|---|"]
@@ -140,7 +145,8 @@ for name, k, rows, fmt in OUTCOMES:
     s = S[k]
     md.append(f"| {name} | {s['m_off']:.4f} | {s['sd_off']:.4f} | {s['min_off']:.4f} – {s['max_off']:.4f} | "
               f"{s['m_on']:.4f} | {s['sd_on']:.4f} | {s['min_on']:.4f} – {s['max_on']:.4f} |")
-md += ["", "> 说明：两条件区间不重叠即为 item-level separation，可直接写进正文（g-score 与 score gap 均无重叠）。"]
+md += ["", "> Note. A non-overlap between the two ranges is item-level separation, which may be stated in "
+       "the text directly (neither the g-score nor the score gap overlaps)."]
 (OUT / "tables.md").write_text("\n".join(md), encoding="utf-8")
 
 # ---------------------------------------------------------------- LaTeX ----
@@ -184,16 +190,16 @@ top to bottom. Detection outcomes (black markers) are significantly different fr
 outcomes (grey markers) are not. The dashed line marks zero. Values printed beside each marker give
 the mean difference, its 95% CI, the p value, and Cohen's d_z. n = 60 pairs.
 
-# 正文可直接插入的句子
+# Sentences that can be pasted into the paper to cite the figures
 
-- 引图 1：`As Figure 1 shows, the increase is uniform across items: every pair moved upward and the
+- Citing Figure 1: `As Figure 1 shows, the increase is uniform across items: every pair moved upward and the
   two conditions do not overlap, so a single translation can be classified correctly from its g-score
   alone.`
-- 引图 2：`Figure 2 places the four outcomes on a common scale: the two detection intervals sit far
+- Citing Figure 2: `Figure 2 places the four outcomes on a common scale: the two detection intervals sit far
   from zero, whereas both lexical intervals straddle zero, which is the pattern the paper's argument
   depends on.`
-- 引表（附录参数表）：`Table A1 lists every generation and detection parameter; toggling
-  \`watermarking_config\` was the only manipulation between conditions.`
+- Citing Table A1: `Table A1 lists every generation and detection parameter; toggling
+  watermarking_config was the only manipulation between conditions.`
 """
 (OUT / "figure_captions.md").write_text(caps, encoding="utf-8")
 

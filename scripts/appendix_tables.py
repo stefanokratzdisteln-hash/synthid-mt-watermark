@@ -1,18 +1,33 @@
 # -*- coding: utf-8 -*-
-"""appendix_tables.py —— 生成论文附录所需的两张配置表（A1 参数、A2 语料构成）"""
+"""appendix_tables.py —— 生成论文附录两张表：A1 参数表、A2 语料构成表
+
+输入：data/translation_results.csv（只用到 id / group / topic / zh_source / sec_off / sec_on）
+输出：results/appendix_tables.md
+"""
 import csv
+import re
 from collections import Counter
 from pathlib import Path
 
-BASE = Path(__file__).resolve().parent
-CORPUS = Path(r"C:\Users\KRATZDISTELN\Doubao\chats\2026-11-09\new-chat\final_60_texts.csv")
-OUT = BASE / "paper_assets" / "appendix_tables.md"
+BASE = Path(__file__).resolve().parent          # scripts/ 目录
+ROOT = BASE.parent                               # 仓库根
+DATA = ROOT / "data"
+RESULTS = ROOT / "results"
 
-rows = list(csv.DictReader(open(CORPUS, encoding="utf-8-sig")))
-files = [r["来源文件序号"] for r in rows]
-chars = [int(r["纯汉字字数"]) for r in rows]
-groups = Counter(r["组别"] for r in rows)
-topics = [r["学科主题"] for r in rows]
+CSV_IN = DATA / "translation_results.csv"
+OUT = RESULTS / "appendix_tables.md"
+
+HAN_RE = re.compile(r"[\u4e00-\u9fff\u3400-\u4dbf]")
+N_SOURCE_FILES = 49          # 60 段来自 49 个 LCMC J 类篇目（篇目对应关系见论文 Appendix A）
+
+rows = list(csv.DictReader(open(CSV_IN, encoding="utf-8-sig")))
+chars = [len(HAN_RE.findall(r["zh_source"])) for r in rows]
+groups = Counter(r["group"] for r in rows)
+topics = [r["topic"] for r in rows]
+minutes = (sum(float(r["sec_off"]) for r in rows) + sum(float(r["sec_on"]) for r in rows)) / 60
+main = groups.get("正式", groups.get("main", 0))
+reserve = groups.get("备选", groups.get("reserve", 0))
+others = len(rows) - main - reserve
 
 md = [
     "## Table A1. Generation and detection configuration",
@@ -38,13 +53,17 @@ md = [
     "",
     "| Property | Value |",
     "|---|---|",
-    f"| Source corpus | LCMC category J (Science / academic prose), 80 files total |",
-    f"| Passages used | {len(rows)} ({groups.get('正式', 0)} main + {groups.get('备选', 0)} reserve) |",
-    f"| Distinct source files | {len(set(files))} |",
+    "| Source corpus | LCMC category J (Science / academic prose), 80 files in total |",
+    f"| Passages used | {len(rows)}"
+    + (f" ({main} main + {reserve} reserve)" if reserve else "")
+    + (f" ({others} unassigned)" if others else "")
+    + " |",
+    f"| Distinct source files | {N_SOURCE_FILES} |",
     f"| Characters (Han only) | {min(chars)}–{max(chars)}, mean {sum(chars) / len(chars):.0f} |",
     f"| Distinct topic labels | {len(set(topics))} |",
-    f"| Watermark-disabled / enabled outputs | {len(rows)} / {len(rows)} pairs |",
-    f"| Total generation time | 44.5 min (21.5 disabled, 23.0 enabled) |",
+    f"| Paired translations | {len(rows)} watermark-disabled / {len(rows)} watermark-enabled |",
+    f"| Total generation time | {minutes:.1f} min |",
 ]
+RESULTS.mkdir(exist_ok=True)
 OUT.write_text("\n".join(md), encoding="utf-8")
 print("\n".join(md))

@@ -6,13 +6,17 @@ from pathlib import Path
 import numpy as np
 from scipy import stats
 
-BASE = Path(__file__).resolve().parent
-groups = {r["id"]: r["group"] for r in csv.DictReader(open(BASE / "translation_results.csv", encoding="utf-8-sig"))}
+BASE = Path(__file__).resolve().parent          # scripts/ 目录
+ROOT = BASE.parent                               # 仓库根
+DATA = ROOT / "data"
+RESULTS = ROOT / "results"
+
+groups = {r["id"]: r["group"] for r in csv.DictReader(open(DATA / "translation_results.csv", encoding="utf-8-sig"))}
 formal = [i for i, g in groups.items() if g.strip() == "正式"]
 print(f"正式样本 {len(formal)} 条，备选 {len(groups) - len(formal)} 条")
 
-mi = {r["id"]: r for r in csv.DictReader(open(BASE / "metrics_per_item.csv", encoding="utf-8-sig"))}
-sg = {r["id"]: r for r in csv.DictReader(open(BASE / "score_gap_results.csv", encoding="utf-8-sig"))}
+mi = {r["id"]: r for r in csv.DictReader(open(DATA / "metrics_per_item.csv", encoding="utf-8-sig"))}
+sg = {r["id"]: r for r in csv.DictReader(open(DATA / "score_gap_results.csv", encoding="utf-8-sig"))}
 
 
 def stats_block(label, off, on):

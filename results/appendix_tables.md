@@ -21,10 +21,10 @@
 
 | Property | Value |
 |---|---|
-| Source corpus | LCMC category J (Science / academic prose), 80 files total |
+| Source corpus | LCMC category J (Science / academic prose), 80 files in total |
 | Passages used | 60 (50 main + 10 reserve) |
 | Distinct source files | 49 |
 | Characters (Han only) | 400–597, mean 481 |
 | Distinct topic labels | 60 |
-| Watermark-disabled / enabled outputs | 60 / 60 pairs |
-| Total generation time | 44.5 min (21.5 disabled, 23.0 enabled) |
+| Paired translations | 60 watermark-disabled / 60 watermark-enabled |
+| Total generation time | 44.5 min |

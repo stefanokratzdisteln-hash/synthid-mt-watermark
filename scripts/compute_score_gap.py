@@ -22,12 +22,16 @@ from transformers.generation.logits_process import SynthIDTextWatermarkLogitsPro
 # ============================================================
 # 1. 配置区
 # ============================================================
-BASE = Path(__file__).resolve().parent
-CSV_PATH = BASE / "translation_results.csv"          # 你的原始结果文件
-METRICS_PATH = BASE / "metrics_per_item.csv"         # 之前算出的正确密钥 g-score
-OUTPUT_PATH = BASE / "score_gap_results.csv"
+BASE = Path(__file__).resolve().parent          # scripts/ 目录
+ROOT = BASE.parent                               # 仓库根
+DATA = ROOT / "data"
+RESULTS = ROOT / "results"
+
+CSV_PATH = DATA / "translation_results.csv"          # 你的原始结果文件
+METRICS_PATH = DATA / "metrics_per_item.csv"         # 之前算出的正确密钥 g-score
+OUTPUT_PATH = DATA / "score_gap_results.csv"
 TOKENIZER_PATH = Path(os.environ.get(
-    "QWEN_MODEL_DIR", str(BASE.parent / "experiment" / "Qwen2.5-3B-Instruct")))   # 绝对路径，v5 需 local_files_only
+    "QWEN_MODEL_DIR", str(ROOT.parent / "experiment" / "Qwen2.5-3B-Instruct")))   # 绝对路径，v5 需 local_files_only
 
 # 你的正确密钥 (必须和生成时一致)
 CORRECT_KEYS = [654, 400, 836, 123, 340, 443, 597, 160, 57, 29,

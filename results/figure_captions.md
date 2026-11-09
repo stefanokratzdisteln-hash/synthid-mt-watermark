@@ -12,13 +12,13 @@ top to bottom. Detection outcomes (black markers) are significantly different fr
 outcomes (grey markers) are not. The dashed line marks zero. Values printed beside each marker give
 the mean difference, its 95% CI, the p value, and Cohen's d_z. n = 60 pairs.
 
-# 正文可直接插入的句子
+# Sentences that can be pasted into the paper to cite the figures
 
-- 引图 1：`As Figure 1 shows, the increase is uniform across items: every pair moved upward and the
+- Citing Figure 1: `As Figure 1 shows, the increase is uniform across items: every pair moved upward and the
   two conditions do not overlap, so a single translation can be classified correctly from its g-score
   alone.`
-- 引图 2：`Figure 2 places the four outcomes on a common scale: the two detection intervals sit far
+- Citing Figure 2: `Figure 2 places the four outcomes on a common scale: the two detection intervals sit far
   from zero, whereas both lexical intervals straddle zero, which is the pattern the paper's argument
   depends on.`
-- 引表（附录参数表）：`Table A1 lists every generation and detection parameter; toggling
-  \`watermarking_config\` was the only manipulation between conditions.`
+- Citing Table A1: `Table A1 lists every generation and detection parameter; toggling
+  watermarking_config was the only manipulation between conditions.`

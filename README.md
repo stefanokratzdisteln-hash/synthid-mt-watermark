@@ -31,25 +31,42 @@ their null intervals. The watermark is detectable; the translation's lexical pro
 
 ```
 .
-├── run_experiment_synthid.py    # generation: paired translations, fixed seed, watermark on/off
-├── compute_metrics.py           # MATTR, repeated trigram ratio, correct-key mean g-score, paired stats
-├── compute_score_gap.py         # score gap against five incorrect keys (+ cross-check vs compute_metrics)
-├── score_gap_analysis.py        # independent re-implementation, used to cross-check the gap file
-├── validate_metrics.py          # negative control (shifted / random keys) and trigram-definition checks
-├── normality_check.py           # Shapiro–Wilk and Wilcoxon signed-rank robustness checks
-├── compare_defs.py              # four operationalisations of the repeated trigram ratio
-├── report_extras.py             # aligned word counts and per-item rise/fall counts
-├── final_stats.py               # statistics table used in the manuscript
-├── subset_stats.py              # the 50-passage main-only subset, reported as a sensitivity check
-├── make_paper_assets.py         # Table 1, Figures 1–2, LaTeX tables, figure captions
-├── appendix_tables.py           # Table A1 (configuration) and Table A2 (corpus composition)
-├── translation_results.csv      # 60 pairs: zh_source, en_watermark_off, en_watermark_on, tokens, seed
-├── metrics_per_item.csv         # per-item MATTR, trigram ratio, g-score for both conditions
-├── score_gap_results.csv        # per-item correct-key and incorrect-key scores, gap before/after
-├── metrics_summary.md           # full report: definitions, sensitivity checks, negative control
-├── paper_assets/                # figures, tables, captions, asset checklist
-└── requirements.txt
+├── data/
+│   ├── translation_results.csv   # 60 pairs: zh_source, en_watermark_off, en_watermark_on, tokens, seed
+│   ├── metrics_per_item.csv      # per-item MATTR, trigram ratio, g-score for both conditions
+│   └── score_gap_results.csv     # per-item correct-key and incorrect-key scores, gap before/after
+├── scripts/
+│   ├── run_experiment_synthid.py # generation: paired translations, fixed seed, watermark on/off
+│   ├── compute_metrics.py        # MATTR, repeated trigram ratio, correct-key mean g-score, paired stats
+│   ├── compute_score_gap.py      # score gap against five incorrect keys (+ cross-check vs compute_metrics)
+│   ├── score_gap_analysis.py     # independent re-implementation, used to cross-check the gap file
+│   ├── validate_metrics.py       # negative control (shifted / random keys) and trigram-definition checks
+│   ├── normality_check.py        # Shapiro–Wilk and Wilcoxon signed-rank robustness checks
+│   ├── compare_defs.py           # four operationalisations of the repeated trigram ratio
+│   ├── report_extras.py          # aligned word counts and per-item rise/fall counts
+│   ├── final_stats.py            # statistics table used in the manuscript
+│   ├── subset_stats.py           # the 50-passage main-only subset, reported as a sensitivity check
+│   ├── make_paper_assets.py      # Table 1, Figures 1–2, LaTeX tables, figure captions
+│   └── appendix_tables.py        # Table A1 (configuration) and Table A2 (corpus composition)
+├── results/
+│   ├── fig1_paired_slope.png
+│   ├── fig2_forest.png
+│   ├── tables.md                 # Table 1 (revised) and Table 2 (descriptive statistics)
+│   ├── tables.tex                # booktabs version
+│   ├── appendix_tables.md        # Tables A1–A2
+│   ├── figure_captions.md        # captions plus sentences to cite the figures
+│   └── metrics_summary.md        # full report: definitions, sensitivity checks, negative control
+├── manuscript/
+│   └── Results_RQ1_detection.txt # RQ1 results paragraph as submitted
+├── README.md
+├── LICENSE
+├── CITATION.cff
+├── requirements.txt
+└── .gitignore
 ```
+
+Every script resolves paths from its own location (`scripts/` → repo root → `data/`, `results/`), so
+they can be run from any working directory.
 
 ## Requirements
 
@@ -91,20 +108,23 @@ Reproduce the statistics and the paper's tables and figures from the shipped CSV
 download beyond the tokenizer):
 
 ```bash
-python compute_metrics.py       # -> metrics_per_item.csv, metrics_summary.md
-python compute_score_gap.py     # -> score_gap_results.csv (cross-checks its g-score against the above)
-python normality_check.py       # -> Shapiro–Wilk and Wilcoxon results
-python make_paper_assets.py     # -> paper_assets/fig1_paired_slope.png, fig2_forest.png, tables.md, tables.tex
-python appendix_tables.py       # -> paper_assets/appendix_tables.md
+python scripts/compute_metrics.py      # -> data/metrics_per_item.csv, results/metrics_summary.md
+python scripts/compute_score_gap.py    # -> data/score_gap_results.csv (cross-checks its g-score)
+python scripts/normality_check.py      # -> Shapiro–Wilk and Wilcoxon results
+python scripts/make_paper_assets.py    # -> results/fig1_paired_slope.png, fig2_forest.png, tables.md, tables.tex
+python scripts/appendix_tables.py      # -> results/appendix_tables.md
 ```
 
 Reproduce the translations themselves (GPU, ~45 min for 60 pairs on one consumer card):
 
 ```bash
-python run_experiment_synthid.py                       # full run
-python run_experiment_synthid.py --limit 3             # smoke test
-python run_experiment_synthid.py --resume              # continue after an interruption
+python scripts/run_experiment_synthid.py                    # full run from data/translation_results.csv
+python scripts/run_experiment_synthid.py --limit 3          # smoke test
+python scripts/run_experiment_synthid.py --out data/regenerated.csv   # annotate-only rerun elsewhere
 ```
+
+Reruns resume automatically: any `id` already present in the `--out` file is skipped, so an interrupted
+run can be restarted with the same command.
 
 ## Method notes
 
@@ -146,6 +166,8 @@ MATTR p = .918; trigram p = .244).
   n = 60 (numbers for the 50-passage subset are in `metrics_summary.md`).
 - The watermark keys are published deliberately: they are this study's own test keys, and reproduction
   of the detection scores requires them.
+- `results/metrics_summary.md` is the analysis log written while the numbers were produced (Chinese
+  prose, kept verbatim); the English summary is the results table above.
 
 ## Limitations
 

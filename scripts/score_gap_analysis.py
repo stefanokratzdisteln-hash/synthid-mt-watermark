@@ -20,10 +20,14 @@ from scipy import stats
 from transformers import AutoTokenizer
 from transformers.generation.logits_process import SynthIDTextWatermarkLogitsProcessor
 
-BASE = Path(__file__).resolve().parent
-MODEL_DIR = BASE.parent / "experiment" / "Qwen2.5-3B-Instruct"
-CSV_PATH = BASE / "translation_results.csv"
-OUT_PATH = BASE / "score_gap_results.csv"
+BASE = Path(__file__).resolve().parent          # scripts/ 目录
+ROOT = BASE.parent                               # 仓库根
+DATA = ROOT / "data"
+RESULTS = ROOT / "results"
+
+MODEL_DIR = ROOT.parent / "experiment" / "Qwen2.5-3B-Instruct"
+CSV_PATH = DATA / "translation_results.csv"
+OUT_PATH = DATA / "score_gap_results.csv"
 
 CORRECT_KEYS = [654, 400, 836, 123, 340, 443, 597, 160, 57, 29,
                 590, 639, 13, 715, 468, 990, 966, 226, 324, 585]

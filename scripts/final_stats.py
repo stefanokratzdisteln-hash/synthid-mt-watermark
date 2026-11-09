@@ -6,9 +6,13 @@ from pathlib import Path
 import numpy as np
 from scipy import stats
 
-BASE = Path(__file__).resolve().parent
-it = list(csv.DictReader(open(BASE / "metrics_per_item.csv", encoding="utf-8-sig")))
-sg = list(csv.DictReader(open(BASE / "score_gap_results.csv", encoding="utf-8-sig")))
+BASE = Path(__file__).resolve().parent          # scripts/ 目录
+ROOT = BASE.parent                               # 仓库根
+DATA = ROOT / "data"
+RESULTS = ROOT / "results"
+
+it = list(csv.DictReader(open(DATA / "metrics_per_item.csv", encoding="utf-8-sig")))
+sg = list(csv.DictReader(open(DATA / "score_gap_results.csv", encoding="utf-8-sig")))
 
 
 def col(rows, k):

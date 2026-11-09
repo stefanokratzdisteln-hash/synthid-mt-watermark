@@ -7,7 +7,7 @@
 | MATTR (window 50) | 0.8094 (0.0470) | 0.8099 (0.0439) | +0.0005 [-0.0056, +0.0066] | 0.16 | 0.876 | 0.02 | 30/30 | 60 |
 | Repeated trigram ratio | 0.0446 (0.0457) | 0.0466 (0.0468) | +0.0020 [-0.0053, +0.0094] | 0.55 | 0.583 | 0.07 | 35/20 | 60 |
 
-> 说明：d_z 为配对效应量（ΔM / SD_diff）；Pairs ↑/↓ 统计逐条升高/降低的条数，用于说明变化是否双向。
+> Note. d_z is the paired effect size (ΔM / SD_diff); Pairs ↑/↓ counts how many items rose or fell, which shows whether the change is directional or two-sided.
 
 ## Table 2 (new). Descriptive statistics and ranges per condition
 
@@ -18,4 +18,4 @@
 | MATTR (window 50) | 0.8094 | 0.0470 | 0.6290 – 0.8806 | 0.8099 | 0.0439 | 0.6692 – 0.8863 |
 | Repeated trigram ratio | 0.0446 | 0.0457 | 0.0000 – 0.1900 | 0.0466 | 0.0468 | 0.0000 – 0.2211 |
 
-> 说明：两条件区间不重叠即为 item-level separation，可直接写进正文（g-score 与 score gap 均无重叠）。
+> Note. A non-overlap between the two ranges is item-level separation, which may be stated in the text directly (neither the g-score nor the score gap overlaps).

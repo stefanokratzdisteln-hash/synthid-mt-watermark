@@ -8,8 +8,12 @@ from pathlib import Path
 import numpy as np
 from scipy import stats
 
-BASE = Path(__file__).resolve().parent
-rows = list(csv.DictReader(open(BASE / "translation_results.csv", encoding="utf-8-sig")))
+BASE = Path(__file__).resolve().parent          # scripts/ 目录
+ROOT = BASE.parent                               # 仓库根
+DATA = ROOT / "data"
+RESULTS = ROOT / "results"
+
+rows = list(csv.DictReader(open(DATA / "translation_results.csv", encoding="utf-8-sig")))
 
 
 def align(a, b):

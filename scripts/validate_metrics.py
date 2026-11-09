@@ -15,9 +15,13 @@ import torch
 from scipy import stats
 from transformers import AutoTokenizer, SynthIDTextWatermarkLogitsProcessor
 
-BASE = Path(__file__).resolve().parent
+BASE = Path(__file__).resolve().parent          # scripts/ 目录
+ROOT = BASE.parent                               # 仓库根
+DATA = ROOT / "data"
+RESULTS = ROOT / "results"
+
 MODEL_DIR = Path(os.environ.get(
-    "QWEN_MODEL_DIR", str(BASE.parent / "experiment" / "Qwen2.5-3B-Instruct")))
+    "QWEN_MODEL_DIR", str(ROOT.parent / "experiment" / "Qwen2.5-3B-Instruct")))
 KEYS = [654, 400, 836, 123, 340, 443, 597, 160, 57, 29,
         590, 639, 13, 715, 468, 990, 966, 226, 324, 585]
 # 真正不同的密钥值：整体 +37 平移（不是 KEYS 的排列）
@@ -74,7 +78,7 @@ def report(name, off, on):
           f"CI=[{lo:+.5f},{hi:+.5f}] t={t:+.3f} p={p:.4g}")
 
 
-rows = list(csv.DictReader(open(BASE / "translation_results.csv", encoding="utf-8-sig")))
+rows = list(csv.DictReader(open(DATA / "translation_results.csv", encoding="utf-8-sig")))
 res = {k: {"off": [], "on": []} for k in PROCS}
 tri_a_off, tri_a_on, tri_b_off, tri_b_on = [], [], [], []
 for r in rows:
