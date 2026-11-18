@@ -10,6 +10,16 @@ version: 1.0.0
 date-released: "2026-11-10"
 license: MIT
 repository-code: "https://github.com/stefanokratzdisteln-hash/synthid-mt-watermark"
+preferred-citation:
+  type: unpublished
+  title: "A Paired Experiment on Keyed Watermarks and Lexical Features in Chinese to English Translation"
+  authors:
+    - family-names: "Liu"
+      given-names: "Chang"
+  year: 2026
+  institution:
+    name: "The Chinese University of Hong Kong, Shenzhen"
+  url: "https://github.com/stefanokratzdisteln-hash/synthid-mt-watermark/blob/main/manuscript/v28.pdf"
 keywords:
   - text watermarking
   - SynthID-Text

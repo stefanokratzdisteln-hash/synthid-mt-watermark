@@ -1,4 +1,6 @@
-## Table 1 (revised). Paired comparison of all four outcomes
+## Original paired t analysis of the four outcomes
+
+The 95% intervals below use the 60 passage-level differences (59 degrees of freedom). Table 1 in the manuscript uses a cluster bootstrap over the 49 source files.
 
 | Outcome | Disabled M (SD) | Enabled M (SD) | Paired ΔM [95% CI] | t(59) | p | d_z | Pairs ↑/↓ | n |
 |---|---|---|---|---|---|---|---|---|
@@ -7,9 +9,9 @@
 | MATTR (window 50) | 0.8094 (0.0470) | 0.8099 (0.0439) | +0.0005 [-0.0056, +0.0066] | 0.16 | 0.876 | 0.02 | 30/30 | 60 |
 | Repeated trigram ratio | 0.0446 (0.0457) | 0.0466 (0.0468) | +0.0020 [-0.0053, +0.0094] | 0.55 | 0.583 | 0.07 | 35/20 | 60 |
 
-> Note. d_z is the paired effect size (ΔM / SD_diff); Pairs ↑/↓ counts how many items rose or fell, which shows whether the change is directional or two-sided.
+> Note. d_z is the mean paired difference divided by its standard deviation. Pairs ↑/↓ gives the counts of increases and decreases, excluding ties.
 
-## Table 2 (new). Descriptive statistics and ranges per condition
+## Descriptive statistics and ranges per condition
 
 | Outcome | Disabled M | Disabled SD | Disabled range | Enabled M | Enabled SD | Enabled range |
 |---|---|---|---|---|---|---|
@@ -18,4 +20,4 @@
 | MATTR (window 50) | 0.8094 | 0.0470 | 0.6290 – 0.8806 | 0.8099 | 0.0439 | 0.6692 – 0.8863 |
 | Repeated trigram ratio | 0.0446 | 0.0457 | 0.0000 – 0.1900 | 0.0466 | 0.0468 | 0.0000 – 0.2211 |
 
-> Note. A non-overlap between the two ranges is item-level separation, which may be stated in the text directly (neither the g-score nor the score gap overlaps).
+> Note. For both detection outcomes, the highest score with watermarking disabled fell below the lowest score with watermarking enabled in this sample.

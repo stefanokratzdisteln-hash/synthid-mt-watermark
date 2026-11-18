@@ -1,13 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-make_paper_assets.py —— 生成论文缺失的图与表
+Generate manuscript Figure 1 and the original paired-analysis supplements in results/.
 
-产出（全部写入 decection\\paper_assets\\）：
-  fig1_paired_slope.png   配对斜率图：g-score 与 score gap 的逐条变化（体现 60/60 分离）
-  fig2_forest.png         四项结局的效应量森林图（两项显著、两项为零，呼应论文主线）
-  tables.md               可直接粘进 Markdown / Word 的三张表
-  tables.tex              booktabs 版 LaTeX 表格
-  figure_captions.md      图注与正文引用句
+The forest plot and companion tables report paired t intervals. Manuscript
+Table 1 reports percentile bootstrap intervals from resampling source files.
 """
 
 import csv
@@ -96,7 +92,7 @@ fig.savefig(OUT / "fig1_paired_slope.png", dpi=300)
 plt.close(fig)
 
 # ---------------------------------------------------------------- 图 2 ----
-# 四项结局的效应量森林图（标准化到各自 SD，便于同图比较）
+# Paired mean differences and t intervals in the original units of each outcome.
 fig, ax = plt.subplots(figsize=(6.8, 2.4), dpi=300)
 labels = ["Correct-key\ng-score", "Score gap", "MATTR\n(window 50)", "Repeated trigram\nratio"]
 pos = np.arange(len(labels))[::-1]
@@ -125,7 +121,9 @@ fig.savefig(OUT / "fig2_forest.png", dpi=300)
 plt.close(fig)
 
 # ---------------------------------------------------------------- 表 1 ----
-md = ["## Table 1 (revised). Paired comparison of all four outcomes", "",
+md = ["## Original paired t analysis of the four outcomes", "",
+      "The 95% intervals below use the 60 passage-level differences (59 degrees of freedom). "
+      "Table 1 in the manuscript uses a cluster bootstrap over the 49 source files.", "",
       "| Outcome | Disabled M (SD) | Enabled M (SD) | Paired ΔM [95% CI] | t(59) | p | d_z | Pairs ↑/↓ | n |",
       "|---|---|---|---|---|---|---|---|---|"]
 for name, k, rows, fmt in OUTCOMES:
@@ -136,23 +134,23 @@ for name, k, rows, fmt in OUTCOMES:
         f"{'< .001' if s['p'] < .001 else f'{s[chr(112)]:.3f}'} | {s['dz']:.2f} | "
         f"{s['up']}/{s['down']} | {s['n']} |")
 
-md += ["", "> Note. d_z is the paired effect size (ΔM / SD_diff); Pairs ↑/↓ counts how many items rose or "
-       "fell, which shows whether the change is directional or two-sided.",
-       "", "## Table 2 (new). Descriptive statistics and ranges per condition", "",
+md += ["", "> Note. d_z is the mean paired difference divided by its standard deviation. "
+       "Pairs ↑/↓ gives the counts of increases and decreases, excluding ties.",
+       "", "## Descriptive statistics and ranges per condition", "",
        "| Outcome | Disabled M | Disabled SD | Disabled range | Enabled M | Enabled SD | Enabled range |",
        "|---|---|---|---|---|---|---|"]
 for name, k, rows, fmt in OUTCOMES:
     s = S[k]
     md.append(f"| {name} | {s['m_off']:.4f} | {s['sd_off']:.4f} | {s['min_off']:.4f} – {s['max_off']:.4f} | "
               f"{s['m_on']:.4f} | {s['sd_on']:.4f} | {s['min_on']:.4f} – {s['max_on']:.4f} |")
-md += ["", "> Note. A non-overlap between the two ranges is item-level separation, which may be stated in "
-       "the text directly (neither the g-score nor the score gap overlaps)."]
+md += ["", "> Note. For both detection outcomes, the highest score with watermarking disabled "
+       "fell below the lowest score with watermarking enabled in this sample."]
 (OUT / "tables.md").write_text("\n".join(md), encoding="utf-8")
 
 # ---------------------------------------------------------------- LaTeX ----
 tex = [r"""\begin{table}[t]
 \centering
-\caption{Paired comparison of detection and lexical outcomes (n = 60 pairs).}
+\caption{Original paired $t$ analysis of detection and lexical outcomes (60 pairs).}
 \label{tab:all_outcomes}
 \begin{tabular}{lcccccc}
 \toprule
@@ -170,36 +168,29 @@ for name, k, rows, fmt in OUTCOMES:
 tex.append(r"""\bottomrule
 \end{tabular}
 \begin{flushleft}\footnotesize
-Note. $\Delta M$ = watermark enabled $-$ disabled; CIs are $t$-based with $df=59$; $d_z$ is the paired effect size.
+Note. $\Delta M$ is the mean paired difference (watermark enabled $-$ disabled).
+Intervals use the $t$ distribution with 59 degrees of freedom. Table 1 in the manuscript uses
+a cluster bootstrap over the 49 source files. $d_z$ is the paired effect size.
 \end{flushleft}
 \end{table}""")
 (OUT / "tables.tex").write_text("\n".join(tex), encoding="utf-8")
 
 # ---------------------------------------------------------------- 图注 ----
-caps = f"""# Figure captions（英文，可直接用）
+caps = """# Figure captions
 
-**Figure 1.** Paired change in detection scores from the watermark-disabled to the watermark-enabled
-condition. Each grey line is one source text; red dots and the red line show condition means.
-Panel (a) plots the correct-key mean g-score and panel (b) the score gap. In both panels the two
-conditions do not overlap at the item level (disabled maximum {S['g']['max_off']:.4f} vs enabled minimum
-{S['g']['min_on']:.4f} for the g-score; {S['gap']['max_off']:.4f} vs {S['gap']['min_on']:.4f} for the score gap),
-so every pair is assigned to its own condition. n = 60 pairs.
+## Manuscript Figure 1. Paired Detection Scores With and Without Watermarking
 
-**Figure 2.** Paired mean differences with 95% confidence intervals for the four outcomes, ordered
-top to bottom. Detection outcomes (black markers) are significantly different from zero; lexical
-outcomes (grey markers) are not. The dashed line marks zero. Values printed beside each marker give
-the mean difference, its 95% CI, the p value, and Cohen's d_z. n = 60 pairs.
+Each gray line connects the two scores for one passage (60 pairs). Red dots show condition means.
+Panel (a) shows the correct-key mean g-score. Panel (b) shows the gap between that score and the mean
+under five incorrect key sets. The watermarked translation scored higher on both measures in all
+60 pairs. [View Figure 1](fig1_paired_slope.png)
 
-# Sentences that can be pasted into the paper to cite the figures
+## Supplementary forest plot from the original paired t analysis
 
-- Citing Figure 1: `As Figure 1 shows, the increase is uniform across items: every pair moved upward and the
-  two conditions do not overlap, so a single translation can be classified correctly from its g-score
-  alone.`
-- Citing Figure 2: `Figure 2 places the four outcomes on a common scale: the two detection intervals sit far
-  from zero, whereas both lexical intervals straddle zero, which is the pattern the paper's argument
-  depends on.`
-- Citing Table A1: `Table A1 lists every generation and detection parameter; toggling
-  watermarking_config was the only manipulation between conditions.`
+Dots show mean paired differences (watermark enabled minus disabled) in each outcome's original
+units. The bars show 95% paired t intervals across 60 passage pairs. Both detection intervals lie
+above the dashed zero line, and both lexical intervals include zero. Manuscript Table 1 reports
+intervals from resampling whole source files. [View the forest plot](fig2_forest.png)
 """
 (OUT / "figure_captions.md").write_text(caps, encoding="utf-8")
 

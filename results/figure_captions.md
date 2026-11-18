@@ -1,24 +1,15 @@
-# Figure captions（英文，可直接用）
+# Figure captions
 
-**Figure 1.** Paired change in detection scores from the watermark-disabled to the watermark-enabled
-condition. Each grey line is one source text; red dots and the red line show condition means.
-Panel (a) plots the correct-key mean g-score and panel (b) the score gap. In both panels the two
-conditions do not overlap at the item level (disabled maximum 0.5144 vs enabled minimum
-0.5246 for the g-score; 0.0158 vs 0.0208 for the score gap),
-so every pair is assigned to its own condition. n = 60 pairs.
+## Manuscript Figure 1. Paired Detection Scores With and Without Watermarking
 
-**Figure 2.** Paired mean differences with 95% confidence intervals for the four outcomes, ordered
-top to bottom. Detection outcomes (black markers) are significantly different from zero; lexical
-outcomes (grey markers) are not. The dashed line marks zero. Values printed beside each marker give
-the mean difference, its 95% CI, the p value, and Cohen's d_z. n = 60 pairs.
+Each gray line connects the two scores for one passage (60 pairs). Red dots show condition means.
+Panel (a) shows the correct-key mean g-score. Panel (b) shows the gap between that score and the mean
+under five incorrect key sets. The watermarked translation scored higher on both measures in all
+60 pairs. [View Figure 1](fig1_paired_slope.png)
 
-# Sentences that can be pasted into the paper to cite the figures
+## Supplementary forest plot from the original paired t analysis
 
-- Citing Figure 1: `As Figure 1 shows, the increase is uniform across items: every pair moved upward and the
-  two conditions do not overlap, so a single translation can be classified correctly from its g-score
-  alone.`
-- Citing Figure 2: `Figure 2 places the four outcomes on a common scale: the two detection intervals sit far
-  from zero, whereas both lexical intervals straddle zero, which is the pattern the paper's argument
-  depends on.`
-- Citing Table A1: `Table A1 lists every generation and detection parameter; toggling
-  watermarking_config was the only manipulation between conditions.`
+Dots show mean paired differences (watermark enabled minus disabled) in each outcome's original
+units. The bars show 95% paired t intervals across 60 passage pairs. Both detection intervals lie
+above the dashed zero line, and both lexical intervals include zero. Manuscript Table 1 reports
+intervals from resampling whole source files. [View the forest plot](fig2_forest.png)
