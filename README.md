@@ -2,8 +2,6 @@
 
 **A Paired Experiment on Keyed Watermarks and Lexical Features in Chinese to English Translation**
 
-Liu Chang · ENG2001 · The Chinese University of Hong Kong, Shenzhen
-
 [Read the paper (v28, PDF)](manuscript/v28.pdf) · [View the results (CSV)](results/summary_statistics.csv) · [Download the Appendix A reproducibility archive](manuscript/v20_reproducibility.zip)
 
 Does a watermark embedded as a model translates Chinese into English leave a detectable signal? Does it also affect the words the model uses? Qwen2.5-3B-Instruct translated each of 60 Chinese science and academic passages twice, once with SynthID-Text enabled and once with it disabled. The model, prompt, sampling settings and seed were the same for both translations of a passage. Each pair was matched for length before scoring.
@@ -74,6 +72,6 @@ MATTR averages the proportion of distinct words in 50-word windows. The repeated
 
 ## Citation and license
 
-Liu, C. (2026). *A paired experiment on keyed watermarks and lexical features in Chinese to English translation* (v28). ENG2001 course paper, The Chinese University of Hong Kong, Shenzhen. [Manuscript](manuscript/v28.pdf) · [Citation metadata](CITATION.cff)
+Liu, C. (2026). *A paired experiment on keyed watermarks and lexical features in Chinese to English translation*. ENG2001 course paper, The Chinese University of Hong Kong, Shenzhen. [Manuscript](manuscript/v28.pdf) · [Citation metadata](CITATION.cff)
 
 The [MIT License](LICENSE) covers the code. The Chinese source passages retain the terms of the Lancaster Corpus of Mandarin Chinese (LCMC).
