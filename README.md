@@ -2,7 +2,7 @@
 
 **A Paired Experiment on Keyed Watermarks and Lexical Features in Chinese to English Translation**
 
-[Read the paper (v28, PDF)](manuscript/v28.pdf) · [View the results (CSV)](results/summary_statistics.csv) · [Download the Appendix A reproducibility archive](manuscript/v20_reproducibility.zip)
+[Read the paper (PDF)](manuscript/paper.pdf) · [View the results (CSV)](results/summary_statistics.csv) · [Download the Appendix A reproducibility archive](manuscript/v20_reproducibility.zip)
 
 Does a watermark embedded as a model translates Chinese into English leave a detectable signal? Does it also affect the words the model uses? Qwen2.5-3B-Instruct translated each of 60 Chinese science and academic passages twice, once with SynthID-Text enabled and once with it disabled. The model, prompt, sampling settings and seed were the same for both translations of a passage. Each pair was matched for length before scoring.
 
@@ -31,13 +31,13 @@ From the repository root, run the following with Python. The verifier needs NumP
 
 ```bash
 python -m pip install numpy scipy
-python -m zipfile -e manuscript/v20_reproducibility.zip _local/v28-repro
-python -B _local/v28-repro/verify_cached_results.py
+python -m zipfile -e manuscript/v20_reproducibility.zip _local/repro
+python -B _local/repro/verify_cached_results.py
 ```
 
 The verifier checks the archive’s file hashes and recomputes all four outcomes for the full sample (60 pairs, 49 files), the main passages (50 pairs, 49 files), and pairs without residual Chinese characters (54 pairs, 44 files). It checks the original paired tests and the source-file bootstrap intervals. The two subsets overlap with the full sample. The cluster and subset checks were exploratory additions after the original analysis.
 
-Appendix A refers to the archive by its original filename, `v20_reproducibility.zip`. It contains the inputs and analysis used in v28, including the exact prompts, key settings, passage-to-file mapping, recorded package versions and per-passage scores.
+Appendix A refers to the archive by its original filename, `v20_reproducibility.zip`. It contains the inputs and analysis used in the paper, including the exact prompts, key settings, passage-to-file mapping, recorded package versions and per-passage scores.
 
 To redraw Figure 1 and the supplementary plots and tables from the saved CSVs, install the numerical and plotting packages and run the figure script. It writes the assets to `results/`.
 
@@ -72,6 +72,6 @@ MATTR averages the proportion of distinct words in 50-word windows. The repeated
 
 ## Citation and license
 
-Liu, C. (2026). *A paired experiment on keyed watermarks and lexical features in Chinese to English translation*. ENG2001 course paper, The Chinese University of Hong Kong, Shenzhen. [Manuscript](manuscript/v28.pdf) · [Citation metadata](CITATION.cff)
+Liu, C. (2026). *A paired experiment on keyed watermarks and lexical features in Chinese to English translation*. ENG2001 course paper, The Chinese University of Hong Kong, Shenzhen. [Manuscript](manuscript/paper.pdf) · [Citation metadata](CITATION.cff)
 
 The [MIT License](LICENSE) covers the code. The Chinese source passages retain the terms of the Lancaster Corpus of Mandarin Chinese (LCMC).
